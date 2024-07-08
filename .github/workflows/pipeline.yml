@@ -25,5 +25,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
-          tags: username/repository:tag
+          tags: ${{ secrets.DOCKER_USERNAME }}/repository:tag
