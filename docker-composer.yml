@@ -2,7 +2,7 @@ version: '3'
 services:
 
   web-page:
-    build: ./backenda-pis
+    build: ./backend-pis
     ports:
       - "8080:3001"
     
