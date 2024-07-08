@@ -1,0 +1,8 @@
+version: '3'
+services:
+
+  web-page:
+    build: ./backenda-pis
+    ports:
+      - "8080:3001"
+    
