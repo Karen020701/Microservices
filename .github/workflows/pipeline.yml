@@ -43,9 +43,9 @@ jobs:
     
     - name: Pull Docker images
       run: |
-        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/docker-app:latest'
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-app:latest'
           
     - name: Run new containers
       run: |
-        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name docker-app-aws -p 8080:3001 ${{ secrets.DOCKERHUB_USERNAME }}/docker-app:latest'
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name docker-app-aws -p 8080:3001 ${{ secrets.DOCKER_USERNAME }}/docker-app:latest'
         
