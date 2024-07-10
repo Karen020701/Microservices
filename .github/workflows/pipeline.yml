@@ -28,3 +28,24 @@ jobs:
           context: ./backend-apis
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/repository:tag
+
+  deploy-AWS:
+    needs: [build-and-push]  
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Set permissions for private key aws
+      run: |
+        echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+
+    
+    - name: Pull Docker images
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/docker-app:latest'
+          
+    - name: Run new containers
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${{ secrets.EC2_HOST }} 'sudo docker run -d --name docker-app-aws -p 8080:3001 ${{ secrets.DOCKERHUB_USERNAME }}/docker-app:latest'
+        
